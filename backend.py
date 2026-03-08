@@ -2,19 +2,19 @@ import time
 import json
 import os
 import subprocess
-import imageio_ffmpeg
 import google.generativeai as genai
 from prompt_template import get_bjj_analysis_prompt
 
 def compress_video_locally(input_path, output_path, status_callback):
     """
-    Bypasses Python memory limits and uses raw FFmpeg to instantly 
+    Bypasses Python memory limits and uses native Linux FFmpeg to instantly 
     crush massive 4K/60fps videos down to tiny files.
     """
     try:
-        status_callback("⚡ Compressing video locally (Hardware accelerated, 480p, 15fps)...")
+        status_callback("⚡ Compressing video locally (Cloud hardware accelerated, 480p, 15fps)...")
         
-        ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+        # Use the native Linux FFmpeg installed via packages.txt
+        ffmpeg_exe = "ffmpeg"
         
         # Command: Overwrite (-y), Input (-i), Scale to 480p height (-vf), 15 FPS (-r), No Audio (-an)
         cmd = [
@@ -34,6 +34,8 @@ def compress_video_locally(input_path, output_path, status_callback):
         print(f"Compression failed: {e}")
         status_callback("⚠️ Compression failed. Attempting to upload original file...")
         return input_path
+
+# ... (the rest of your analyze_video_with_gemini function stays exactly the same)
 
 def analyze_video_with_gemini(video_path, user_desc, user_belt, opp_desc, opp_belt, api_key, status_callback=None):
     def update_status(msg):
@@ -121,4 +123,5 @@ def analyze_video_with_gemini(video_path, user_desc, user_belt, opp_desc, opp_be
                 time.sleep(1)
                 os.remove(compressed_path)
             except:
+
                 pass
