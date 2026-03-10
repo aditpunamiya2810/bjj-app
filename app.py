@@ -52,8 +52,12 @@ with col_left:
 
 with col_right:
     st.subheader("⚙️ MATCH CONFIGURATION")
-    user_desc = st.text_input("👤 Your Description", "Player with black jersey and long hair")
-    opp_desc = st.text_input("🥊 Opponent Description", "Player with green jersey")
+    
+    # Use value="" to keep it empty, and 'placeholder' for the hint
+    user_desc = st.text_input("👤 Your Description", value="", placeholder="e.g., Player with black jersey and long hair")
+    opp_desc = st.text_input("🥊 Opponent Description", value="", placeholder="e.g., Player with green jersey")
+    
+    # Optional: You can use index=None to make dropdowns empty by default too
     activity_type = st.selectbox("Activity Type", ["Brazilian Jiu-Jitsu", "Submission Grappling"])
     
     c1, c2 = st.columns(2)
@@ -61,13 +65,19 @@ with col_right:
     opp_belt = c2.selectbox("Opponent Belt", ["unknown", "white", "blue", "purple", "brown", "black"])
 
 # --- Main Execution ---
+# --- Main Execution ---
 if st.button("🚀 START ANALYSIS"):
     if not uploaded_file:
         st.error("Please upload a video file first.")
         st.stop()
+        
+    if not user_desc or not opp_desc:
+        st.error("Please provide a brief description for both players so the AI can track you properly!")
+        st.stop()
 
     # Create empty placeholders in the UI to update live
     st.markdown("---")
+# ... (the rest of your code stays exactly the same)
     timer_card = st.empty()
     status_card = st.empty()
 
@@ -210,4 +220,5 @@ if st.button("🚀 START ANALYSIS"):
         
         # Make the downloaded file name dynamic too!
         safe_name = uploaded_file.name.split('.')[0]
+
         st.download_button("📄 Download Full PDF Report", data=pdf_bytes, file_name=f"Report_{safe_name}.pdf", mime="application/pdf", use_container_width=True)
