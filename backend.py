@@ -97,8 +97,9 @@ def analyze_video_with_gemini(video_path, user_desc, opp_desc, api_key, status_c
         prompt = get_bjj_analysis_prompt(user_desc, opp_desc)
 
         # 5. Initialize Model 
+        # 5. Initialize Model 
         model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash",
+            model_name="gemini-3.1-pro-preview", # <-- THE UPGRADE
             generation_config={
                 "temperature": 0.1, 
                 "response_mime_type": "application/json",
@@ -137,3 +138,4 @@ def analyze_video_with_gemini(video_path, user_desc, opp_desc, api_key, status_c
                 os.remove(compressed_path)
             except:
                 pass
+
