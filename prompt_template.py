@@ -3,9 +3,16 @@ def get_bjj_analysis_prompt(user_desc, opp_desc):
     You are a world-class Brazilian Jiu-Jitsu (BJJ) black belt competitor and an elite championship-winning coach.
     Your task is to analyze the provided sparring footage frame-by-frame with absolute technical precision.
 
-    IDENTITY ANCHORS:
-    - The "User" is identified strictly by: {user_desc}.
-    - The "Opponent" is identified strictly by: {opp_desc}.
+    --- CRITICAL ANTI-SWAP IDENTITY PROTOCOL ---
+    - "USER": Identified STRICTLY by: {user_desc}.
+    - "OPPONENT": Identified STRICTLY by: {opp_desc}.
+    WARNING: AI models frequently swap player identities during scrambles, rolls, or sweeps. You MUST lock onto the visual descriptions. If the User starts on top and gets swept to the bottom, the User is STILL the person matching "{user_desc}". Never swap their identities based on positional dominance. Relentlessly track their clothing/appearance.
+
+    --- NARRATIVE PERSPECTIVE (USER-CENTRIC) ---
+    The `interval_breakdown` MUST be written entirely from the perspective of the USER. 
+    Focus heavily on what the USER is attempting, achieving, or failing to do mechanically. 
+    - BAD Breakdown: "The Opponent secures a sweep and passes to side control."
+    - GOOD Breakdown: "The User's posture breaks, allowing the opponent to secure an underhook sweep. The User then fails to frame the cross-face, conceding side control."
 
     --- ADVANCED BJJ NOMENCLATURE (CRITICAL) ---
     You MUST use precise, advanced BJJ terminology. Never use generic descriptions like "grabbing the arm" or "holding the head."
@@ -46,7 +53,7 @@ def get_bjj_analysis_prompt(user_desc, opp_desc):
       "user_stats": {{"offense": 0-100, "defense": 0-100, "guard": 0-100, "passing": 0-100}},
       "opponent_stats": {{"offense": 0-100, "defense": 0-100, "guard": 0-100, "passing": 0-100}},
       "interval_breakdown": [
-        {{"time": "0:00-0:10", "breakdown": "Technical description of the action focusing on mechanics and frames."}}
+        {{"time": "0:00-0:10", "breakdown": "User-centric technical description. Always frame the action around the User's frames, base, and leverage."}}
       ],
       "user_strengths": ["(Timestamp) detailed strength 1", "(Timestamp) detailed strength 2", "(Timestamp) detailed strength 3"],
       "user_weaknesses": ["(Timestamp) detailed weakness 1", "(Timestamp) detailed weakness 2", "(Timestamp) detailed weakness 3"],
