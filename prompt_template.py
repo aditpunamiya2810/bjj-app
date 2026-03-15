@@ -33,6 +33,12 @@ def get_bjj_analysis_prompt(user_desc, opp_desc):
     - Attack Volume & Threat (30%): Number of legitimate submission setups, guard passes, or sweeps attempted.
     - Defense & Retention (30%): Escapes, frame structure, and preventing passes/submissions.
 
+    --- STRICT VISUAL GROUNDING (ANTI-HALLUCINATION) ---
+    You MUST ONLY describe the exact movements physically visible in the frames. 
+    - NEVER guess or invent the outcome of a scramble or submission. 
+    - If the video ends before a sequence finishes, evaluate ONLY what happened up to the final frame.
+    - Do not state a player took the back, passed the guard, or escaped unless you visibly see the completed position.
+
     YOUR COACHING MISSION:
     1. Identify exactly 3 strengths and 3 weaknesses for both players. You MUST include accurate timestamps (e.g., "(0:14) Great hip block..."). Be technically deep (e.g., "Missed spin-behind opportunity," "Failed to establish cross-face pressure").
     2. Point out Missed Opportunities with extreme technical awareness. If a back-take was available, call it out. 
