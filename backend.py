@@ -57,7 +57,7 @@ def compress_video_locally(input_path, output_path, status_callback):
     except Exception as e:
         raise Exception(f"Compression failed: {str(e)}")
 
-def analyze_video_with_gemini(video_path, user_desc, opp_desc, api_key, status_callback=None):
+def analyze_video_with_gemini(video_path, user_desc, opp_desc, match_context, api_key, status_callback=None):
     def update_status(msg):
         if status_callback:
             status_callback(msg)
@@ -94,7 +94,7 @@ def analyze_video_with_gemini(video_path, user_desc, opp_desc, api_key, status_c
             raise Exception("Video processing failed on Google's servers.")
 
         # 4. Generate Prompt
-        prompt = get_bjj_analysis_prompt(user_desc, opp_desc)
+        prompt = get_bjj_analysis_prompt(user_desc, opp_desc, match_context)
 
         # 5. Initialize Model 
         # 5. Initialize Model 
