@@ -51,8 +51,12 @@ with col_left:
 
 with col_right:
     st.subheader("⚙️ MATCH CONFIGURATION")
-    user_desc = st.text_input("👤 Your Description", value="", placeholder="e.g., Player with black jersey and long hair")
-    opp_desc = st.text_input("🥊 Opponent Description", value="", placeholder="e.g., Player with green jersey")
+    user_desc = st.text_input("👤 Your Description", value="", placeholder="e.g., Black rashguard, bald")
+    opp_desc = st.text_input("🥊 Opponent Description", value="", placeholder="e.g., White gi, blue belt")
+    
+    # NEW: The Narrative Anchor Text Box
+    match_context = st.text_area("📝 Match Context (Optional)", value="", placeholder="e.g., I had this guy in a front headlock and attempted a guillotine but couldn't finish.")
+    
     activity_type = st.selectbox("Activity Type", ["Brazilian Jiu-Jitsu", "Submission Grappling"])
 
 # --- Main Execution ---
@@ -77,10 +81,11 @@ if st.button("🚀 START ANALYSIS"):
     exception_container = {}
     shared_status = {"msg": "Initializing analysis..."}
 
-    def run_backend():
+   def run_backend():
         try:
+            # Pass the new match_context variable into the backend function
             result_container['data'] = analyze_video_with_gemini(
-                tmp_video_path, user_desc, opp_desc, API_KEY,
+                tmp_video_path, user_desc, opp_desc, match_context, API_KEY,
                 status_callback=lambda msg: shared_status.update({"msg": msg})
             )
         except Exception as e:
